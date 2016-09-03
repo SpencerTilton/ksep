@@ -1,0 +1,10 @@
+{
+  "globalDependencies": {
+    "jquery": "registry:dt/jquery#1.10.0+20160704162008",
+    "react": "registry:dt/react#0.14.0+20160817201227",
+    "react-dnd": "registry:dt/react-dnd#2.0.2+20160816153011",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "require": "registry:dt/require#2.1.20+20160316155526",
+    "svgjs": "registry:dt/svgjs#0.0.0+20160317120654"
+  }
+}
