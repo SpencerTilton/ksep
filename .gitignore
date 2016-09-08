@@ -1,0 +1,9 @@
+node_modules
+dist
+typings
+npm-debug.log
+.vscode
+test.cir
+out.txt
+coords.txt
+test.txt
