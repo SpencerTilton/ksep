@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Wire, getCoords, getBetterCoords, removeWire, getWireIndex} from '../circuit';
+import {Wire, getCoords, getBetterCoords, getBetterBetterCoords, removeWire, getWireIndex} from '../circuit';
 
 export interface NewWireProps { wire: Wire };
 
@@ -29,23 +29,74 @@ export class NewWire extends React.Component<NewWireProps, {}>{
     }; 
 
     render() {
-        let [x1, y1, x2, y2] = this.doMaths();
+        let coor = this.doMaths();
+        let boxes = this.makeBoxes(coor);
+        console.log(boxes);
+        
         //this solution messes with the svg box limits
 
         return (
             <div onClick={this.click}>
-                <svg width={this.largestX - this.smallestX} height={this.largestY - this.smallestY}
-                    style={{ position: "absolute", left: this.smallestX, top: this.smallestY}}>
-                    <polyline points={this.getPathString(x1, y1, x2, y2) }fill="none" stroke="purple" strokeWidth="6"/>
-                </svg>
+                
             </div>
         );
     };
 
     doMaths() {
-        let [x1, y1, x2, y2] = getBetterCoords(this.props.wire);
+        let [x1, y1, x2, y2, r1, r2] = getBetterBetterCoords(this.props.wire);
+        let x3, y3, x4, y4: number = 0;
+        let arr: [number, number][] = [];
 
-        this.smallestX = this.smallestY = this.largestX = this.largestY = 0;
+        if (((r1&2) === (r2%2))&&((r1&2) === 0)) {
+            x3 = x4 = Math.abs(x1 - x2);
+            y3 = y1;
+            y4 = y2;
+            arr = [[x1, y1], [x3, y3], [x4, y4], [x2, y2]];
+            return arr
+        }
+        else if (((r1&2) === (r2%2))&&((r1&2) === 1)) {
+            y3 = y4 = Math.abs(x1 - x2);
+            x3 = x1;
+            x4 = x2;
+            arr = [[x1, y1], [x3, y3], [x4, y4], [x2, y2]];
+            return arr;
+        }
+        else {
+            if ((r1&2) === 0) {
+                x3 = x2;
+                y3 = y1;
+                arr = [[x1, y1], [x3, y3], [x2, y2]];
+                return arr;
+            }
+            else {
+                x3 = x1;
+                y3 = y2;
+                arr = [[x1, y1], [x3, y3], [x2, y2]];
+                return arr;
+            }
+        }
+    }
+    makeBoxes(arr: [number, number][]): [[number,number],[number,number],boolean][] {
+        // bool value of false means x is changing
+        // bool value of true means y is changing
+        let n: [[number,number],[number,number],boolean][];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i][0] < arr[i+1][0]) {
+                n.push([arr[i],arr[i+1],false]);
+            } else if (arr[i+1][0] < arr[i][0]) {
+                n.push([arr[i+1],arr[i],false]);
+            } else if (arr[i][1] < arr[i+1][1]) {
+                n.push([arr[i],arr[i+1],true]);
+            } else if (arr[i+1][1] < arr[i][1]) {
+                n.push([arr[i],arr[i+1], true]);
+            }
+        }
+
+        return n;
+    }
+
+    getSVGBoxLocation () {
+        /*this.smallestX = this.smallestY = this.largestX = this.largestY = 0;
         if (x1 > x2) {
             this.largestX = x1;
             this.smallestX = x2;
@@ -60,9 +111,7 @@ export class NewWire extends React.Component<NewWireProps, {}>{
         } else {
             this.largestY = y2;
             this.smallestY = y1;
-        }
-
-        return [x1, y1, x2, y2];
+        }*/
     }
 
     tranlateToRelative(x: number, y: number): [number, number] {

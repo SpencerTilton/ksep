@@ -273,6 +273,34 @@ export function getBetterCoords(wire: Wire): [number, number, number, number] {
     return [x1, y1, x2, y2]
 }
 
+export function getBetterBetterCoords(wire: Wire): [number, number, number, number, number, number] {
+
+    let posComp = circuitState.comps[wire.pos.conComp];
+    let x1 = posComp.gui.xLoc;
+    let y1 = posComp.gui.yLoc;
+
+    let negComp = circuitState.comps[wire.neg.conComp];
+    let x2 = negComp.gui.xLoc;
+    let y2 = negComp.gui.yLoc;
+
+
+    //TODO, logic that modifies coords based on rotation
+    let posPort = (wire.pos.conPort);
+    let negPort = (wire.neg.conPort);
+
+    let posRot = Rotations.indexOf(posComp.gui.rotation);
+    let negRot = Rotations.indexOf(negComp.gui.rotation);
+
+    let posState: [number, number] = [posPort, posRot];
+    let negState: [number, number] = [negPort, negRot];
+
+
+    [x1, y1] = translate(x1, y1, posState);
+    [x2, y2] = translate(x2, y2, negState);
+
+    return [x1, y1, x2, y2, posRot, negRot]
+}
+
 function translate(x: number, y: number, state: [number, number]): [number, number] {
     let a = state[0];
     let b = state[1];
