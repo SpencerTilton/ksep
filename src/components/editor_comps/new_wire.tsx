@@ -42,10 +42,35 @@ export class NewWire extends React.Component<NewWireProps, {}>{
         );
     };
 
-    getWirePieces(arr: [[number,number],[number,number],boolean][]): JSX.Element {
+    getWirePieces(arr: [[number,number],[number,number],boolean][]): JSX.Element[] {
+            return arr.map(
+                (item, index) => {
+                    let widthIsZero: boolean = false;
+                    let width = item[0][0] - item[1][0];
+                    if (width = 0) {widthIsZero = true; width}
+                    let height = item[1][1] - item[0][1];
+                    if (height = 0) {widthIsZero = false; height}
+                    
+                    return (
+                    <svg key={index} width={width+5} height={height+5}
+                        style={{ position: "absolute", left: item[0][0], top: item[0][1]}}>
+                        <polyline style={{fill: "white", stroke: "red", strokeWidth: "4"}} points={this.getPolyPoints(widthIsZero, width, height)}/>
+                        <circle r="3" cx="3" cy="3" />
+                    </svg>)
+                }
+            );
+    }
 
-
-        return null;
+    getPolyPoints(isVertical: boolean, width: number, height: number) {
+        let s: string;
+        if (isVertical === true) {
+            s = "0,0 0," + height.toString();
+            return s;
+        }
+        else {
+            s = "0,0 " + width.toString() + ",0"
+            return s;
+        }
     }
 
     doMaths() {
