@@ -36,11 +36,17 @@ export class NewWire extends React.Component<NewWireProps, {}>{
         //this solution messes with the svg box limits
 
         return (
-            <div onClick={this.click}>
-                
+            <div>
+                { this.getWirePieces(boxes) }
             </div>
         );
     };
+
+    getWirePieces(arr: [[number,number],[number,number],boolean][]): JSX.Element {
+
+
+        return null;
+    }
 
     doMaths() {
         let [x1, y1, x2, y2, r1, r2] = getBetterBetterCoords(this.props.wire);
@@ -79,8 +85,8 @@ export class NewWire extends React.Component<NewWireProps, {}>{
     makeBoxes(arr: [number, number][]): [[number,number],[number,number],boolean][] {
         // bool value of false means x is changing
         // bool value of true means y is changing
-        let n: [[number,number],[number,number],boolean][];
-        for (let i = 0; i < arr.length; i++) {
+        let n: [[number,number],[number,number],boolean][] = [];
+        for (let i = 0; i < arr.length - 1; i++) {
             if (arr[i][0] < arr[i+1][0]) {
                 n.push([arr[i],arr[i+1],false]);
             } else if (arr[i+1][0] < arr[i][0]) {
