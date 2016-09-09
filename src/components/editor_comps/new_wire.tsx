@@ -46,16 +46,19 @@ export class NewWire extends React.Component<NewWireProps, {}>{
             return arr.map(
                 (item, index) => {
                     let widthIsZero: boolean = false;
-                    let width = item[0][0] - item[1][0];
-                    if (width = 0) {widthIsZero = true; width}
-                    let height = item[1][1] - item[0][1];
-                    if (height = 0) {widthIsZero = false; height}
+                    let width: number = (item[0][0] - item[1][0]);
+                    if (width === 0) {widthIsZero = true;}
+                    let height: number = (item[1][1] - item[0][1]);
+                    if (height === 0) {widthIsZero = false;}
+                    console.log(width, height);
+                    console.log(item.toString());
+                    
+                    
                     
                     return (
                     <svg key={index} width={width+5} height={height+5}
                         style={{ position: "absolute", left: item[0][0], top: item[0][1]}}>
                         <polyline style={{fill: "white", stroke: "red", strokeWidth: "4"}} points={this.getPolyPoints(widthIsZero, width, height)}/>
-                        <circle r="3" cx="3" cy="3" />
                     </svg>)
                 }
             );
@@ -86,7 +89,7 @@ export class NewWire extends React.Component<NewWireProps, {}>{
             return arr
         }
         else if (((r1&2) === (r2%2))&&((r1&2) === 1)) {
-            y3 = y4 = Math.abs(x1 - x2);
+            y3 = y4 = Math.abs(y1 - y2);
             x3 = x1;
             x4 = x2;
             arr = [[x1, y1], [x3, y3], [x4, y4], [x2, y2]];
@@ -119,7 +122,7 @@ export class NewWire extends React.Component<NewWireProps, {}>{
             } else if (arr[i][1] < arr[i+1][1]) {
                 n.push([arr[i],arr[i+1],true]);
             } else if (arr[i+1][1] < arr[i][1]) {
-                n.push([arr[i],arr[i+1], true]);
+                n.push([arr[i+1],arr[i], true]);
             }
         }
 
