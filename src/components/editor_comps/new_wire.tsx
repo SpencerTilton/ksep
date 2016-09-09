@@ -46,7 +46,7 @@ export class NewWire extends React.Component<NewWireProps, {}>{
             return arr.map(
                 (item, index) => {
                     let widthIsZero: boolean = false;
-                    let width: number = (item[0][0] - item[1][0]);
+                    let width: number = (item[1][0] - item[0][0]);
                     if (width === 0) {widthIsZero = true;}
                     let height: number = (item[1][1] - item[0][1]);
                     if (height === 0) {widthIsZero = false;}
