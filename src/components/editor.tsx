@@ -4,7 +4,7 @@ import { DropTarget } from 'react-dnd';
 import { observe, addComp, moveComp, CircuitItem, getPerkslist, Wire, rotateLastMoved} from './circuit';
 import CircuitComp from './editor_comps/circuit_comp';
 import { NewWire }  from './editor_comps/new_wire';
-import { GraphWidget } from './GraphWidget';
+import { GraphWidget } from './graphWidget';
 
 
 //This prop is required by react DND
