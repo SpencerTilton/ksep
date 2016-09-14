@@ -82,7 +82,12 @@ export class NewWire extends React.Component<NewWireProps, {}>{
         let arr: [number, number][] = [];
 
         if (((r1&2) === (r2%2))&&((r1&2) === 0)) {
-            x3 = x4 = Math.abs(x1 - x2);
+            if (x1 <= x2) {
+                x3 = x4 = (x2 - x1)/2 + x1;
+            }
+            else {
+                x3 = x4 = (x1 - x2)/2 + x2;
+            }
             y3 = y1;
             y4 = y2;
             arr = [[x1, y1], [x3, y3], [x4, y4], [x2, y2]];
