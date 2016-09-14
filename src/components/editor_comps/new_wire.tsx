@@ -50,8 +50,8 @@ export class NewWire extends React.Component<NewWireProps, {}>{
                     if (width === 0) {widthIsZero = true;}
                     let height: number = (item[1][1] - item[0][1]);
                     if (height === 0) {widthIsZero = false;}
-                    console.log(width, height);
-                    console.log(item.toString());
+                    //console.log(width, height);
+                    //console.log(item.toString());
                     
                     
                     
@@ -77,6 +77,7 @@ export class NewWire extends React.Component<NewWireProps, {}>{
     }
 
     doMaths() {
+        // NOTE: Rotation is sometimes calculated wrong
         let [x1, y1, x2, y2, r1, r2] = getBetterBetterCoords(this.props.wire);
         let x3, y3, x4, y4: number = 0;
         let arr: [number, number][] = [];
