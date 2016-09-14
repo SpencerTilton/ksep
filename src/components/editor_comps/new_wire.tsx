@@ -94,7 +94,12 @@ export class NewWire extends React.Component<NewWireProps, {}>{
             return arr
         }
         else if (((r1&2) === (r2%2))&&((r1&2) === 1)) {
-            y3 = y4 = Math.abs(y1 - y2);
+            if (y1 <= y2) {
+                y3 = y4 = (y2 - y1)/2 + y1;
+            }
+            else {
+                y3 = y4 = (y1 - y2)/2 + y2;
+            }
             x3 = x1;
             x4 = x2;
             arr = [[x1, y1], [x3, y3], [x4, y4], [x2, y2]];
